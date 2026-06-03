@@ -18,7 +18,8 @@ export default function Itinerary() {
   }, []);
 
   const day = days.find((d) => d.n === active) || days[0];
-  const toggle = (key) => setOpen((p) => ({ ...p, [key]: !p[key] }));
+  const toggle = (key, def) =>
+    setOpen((p) => ({ ...p, [key]: !(key in p ? p[key] : def) }));
 
   const selectDay = (n) => {
     setActive(n);
@@ -54,7 +55,7 @@ export default function Itinerary() {
         <ol className="timeline">
           {day.items.map((item, i) => {
             const key = `${day.n}-${i}`;
-            const isOpen = !!open[key];
+            const isOpen = key in open ? open[key] : i === 0;
             return (
               <li className={`tl ${isOpen ? "is-open" : ""}`} key={key}>
                 <div className="tl__rail" aria-hidden="true">
@@ -62,7 +63,7 @@ export default function Itinerary() {
                 </div>
                 <button
                   className="tl__head"
-                  onClick={() => toggle(key)}
+                  onClick={() => toggle(key, i === 0)}
                   aria-expanded={isOpen}
                 >
                   <span className="tl__time">{item.time}</span>

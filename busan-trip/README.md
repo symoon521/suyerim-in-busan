@@ -11,7 +11,7 @@
 - '맨 위로' 플로팅 버튼, 화면 크기별 반응형
 
 ## 내용 수정하기
-모든 내용은 **`app/data.js` 한 파일**에 있습니다. (trip / facts / highlights / days / budget / checklist / tips / nav)
+모든 내용은 **`app/data.js` 한 파일**에 있습니다. (trip / facts / highlights / days / checklist / tips / nav)
 일정 항목의 `place`는 클릭 시 구글 지도로 연결됩니다.
 
 ## 디자인 미리보기 (도구 설치 없이)

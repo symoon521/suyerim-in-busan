@@ -52,6 +52,7 @@ export default function Nav() {
               <a
                 href={`#${n.id}`}
                 className={active === n.id ? "is-active" : ""}
+                aria-current={active === n.id ? "true" : undefined}
                 onClick={() => setOpen(false)}
               >
                 {n.label}

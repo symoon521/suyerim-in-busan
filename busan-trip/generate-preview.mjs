@@ -1,5 +1,5 @@
 import { readFileSync, writeFileSync } from "fs";
-import { trip, facts, highlights, days, budget, checklist, tips, nav } from "./app/data.js";
+import { trip, facts, highlights, days, checklist, tips, nav } from "./app/data.js";
 
 const css = readFileSync(new URL("./app/globals.css", import.meta.url), "utf8");
 
@@ -28,10 +28,10 @@ const daysHtml = days.map((day, i) => `
           <p class="day__summary">${day.summary}</p>
         </div>
         <ol class="timeline">
-          ${day.items.map((item) => `
-          <li class="tl">
+          ${day.items.map((item, idx) => `
+          <li class="tl${idx === 0 ? " is-open" : ""}">
             <div class="tl__rail"><span class="tl__dot"></span></div>
-            <button class="tl__head" aria-expanded="false">
+            <button class="tl__head" aria-expanded="${idx === 0 ? "true" : "false"}">
               <span class="tl__time">${item.time}</span>
               <span class="tl__heading"><span class="tl__title">${item.title}</span><span class="tl__place-mini">${item.place}</span></span>
               <span class="tl__chev">⌄</span>
@@ -44,11 +44,6 @@ const daysHtml = days.map((day, i) => `
           </li>`).join("")}
         </ol>
       </div>`).join("");
-
-const perPerson = budget.items.reduce((s, b) => s + b.amount, 0);
-const maxAmt = Math.max(...budget.items.map((b) => b.amount));
-const budgetRows = budget.items.map((b) => `
-          <li class="budget__row"><span class="budget__label">${b.label}</span><span class="budget__track"><span class="budget__fill" style="width:${((b.amount / maxAmt) * 100).toFixed(0)}%"></span></span><span class="budget__amt">${b.amount}${budget.unit}</span></li>`).join("");
 
 const allChecks = checklist.flatMap((g) => g.items.map((i) => `${g.group}:${i}`));
 const checkHtml = checklist.map((g) => `
@@ -73,6 +68,7 @@ ${css}
 </style>
 </head>
 <body>
+<a href="#overview" class="skip-link">본문으로 건너뛰기</a>
 <div class="progress"><div class="progress__bar" id="prog" style="width:0%"></div></div>
 <nav class="nav" id="nav"><div class="nav__inner">
   <a href="#top" class="nav__brand">${trip.place}<span>TRIP</span></a>
@@ -108,17 +104,6 @@ ${css}
       <div class="daytabs">${tabsHtml}
       </div>
       ${daysHtml}
-    </div>
-  </div></section>
-
-  <section class="section budget" id="budget"><div class="wrap">
-    <div class="section__head reveal reveal--in"><span class="eyebrow">Budget</span><h2 class="section__title">예상 예산</h2><p class="section__hint">인원을 바꾸면 합계가 자동으로 계산돼요.</p></div>
-    <div class="budget__box reveal reveal--in">
-      <div class="people"><span class="people__label">인원</span><div class="people__ctrl"><button id="minus" aria-label="인원 줄이기">−</button><span class="people__num" id="people">1명</span><button id="plus" aria-label="인원 늘리기">+</button></div></div>
-      <ul class="budget__list">${budgetRows}
-      </ul>
-      <div class="budget__total"><span id="totlabel">1명 합계</span><strong id="total">약 ${perPerson}${budget.unit}</strong></div>
-      <p class="budget__note">1인 약 ${perPerson}${budget.unit} 기준 · 숙박은 인원·객실에 따라 달라질 수 있어요.</p>
     </div>
   </div></section>
 
@@ -161,8 +146,8 @@ ${css}
   burger.addEventListener('click', function(){ links.classList.toggle('nav__links--open'); });
   var navAs = links.querySelectorAll('a');
   Array.prototype.forEach.call(navAs, function(a){ a.addEventListener('click', function(){ links.classList.remove('nav__links--open'); }); });
-  var sio = new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ Array.prototype.forEach.call(navAs, function(a){ a.classList.toggle('is-active', a.getAttribute('data-nav') === e.target.id); }); } }); }, { rootMargin: '-45% 0px -50% 0px' });
-  ['overview','itinerary','budget','checklist','tips'].forEach(function(id){ var el = document.getElementById(id); if(el) sio.observe(el); });
+  var sio = new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ Array.prototype.forEach.call(navAs, function(a){ var on = a.getAttribute('data-nav') === e.target.id; a.classList.toggle('is-active', on); if(on){ a.setAttribute('aria-current','true'); } else { a.removeAttribute('aria-current'); } }); } }); }, { rootMargin: '-45% 0px -50% 0px' });
+  ['overview','itinerary','checklist','tips'].forEach(function(id){ var el = document.getElementById(id); if(el) sio.observe(el); });
 
   var tabs = document.querySelectorAll('.daytab');
   var dayEls = document.querySelectorAll('.day[data-day]');
@@ -181,12 +166,6 @@ ${css}
       head.setAttribute('aria-expanded', open ? 'true' : 'false');
     });
   });
-
-  var perPerson = ${perPerson}, unit = '${budget.unit}', people = 1;
-  var peopleEl = document.getElementById('people'), totalEl = document.getElementById('total'), totLabel = document.getElementById('totlabel');
-  function renderPeople(){ peopleEl.textContent = people + '명'; totLabel.textContent = people + '명 합계'; totalEl.textContent = '약 ' + (perPerson * people) + unit; }
-  document.getElementById('minus').addEventListener('click', function(){ people = Math.max(1, people - 1); renderPeople(); });
-  document.getElementById('plus').addEventListener('click', function(){ people = Math.min(10, people + 1); renderPeople(); });
 
   var KEY = 'busan-trip-checklist', total = ${allChecks.length};
   var fill = document.getElementById('checkfill'), label = document.getElementById('checklabel');

@@ -45,6 +45,30 @@ body {
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+
+.skip-link {
+  position: absolute;
+  left: 12px;
+  top: -64px;
+  z-index: 100;
+  background: var(--navy);
+  color: #fff;
+  padding: 0.6rem 1.1rem;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: top 0.2s ease;
+}
+.skip-link:focus { top: 12px; }
+
+a:focus-visible,
+button:focus-visible {
+  outline: 3px solid var(--blue);
+  outline-offset: 2px;
+  border-radius: 8px;
 }
 
 .wrap { max-width: 1080px; margin: 0 auto; padding: 0 1.25rem; }
@@ -380,37 +404,6 @@ body {
 }
 .tl__pin { width: 8px; height: 8px; border-radius: 50% 50% 50% 0; background: var(--blue); transform: rotate(-45deg); }
 
-/* ───────── BUDGET ───────── */
-.budget__box { background: var(--paper); border: 1px solid var(--line); border-radius: 20px; padding: 1.4rem; }
-.people {
-  display: flex; align-items: center; justify-content: space-between;
-  padding-bottom: 1.2rem; margin-bottom: 1.2rem; border-bottom: 1px solid var(--line);
-}
-.people__label { font-weight: 600; }
-.people__ctrl { display: flex; align-items: center; gap: 0.6rem; }
-.people__ctrl button {
-  width: 38px; height: 38px; border-radius: 50%;
-  border: 1.5px solid var(--line); background: var(--bg); color: var(--navy);
-  font-size: 1.3rem; line-height: 1; cursor: pointer;
-  transition: border-color 0.2s, background 0.2s;
-}
-.people__ctrl button:active { background: var(--blue-soft); border-color: var(--blue); }
-.people__num { font-family: var(--latin); font-weight: 700; font-size: 1.1rem; min-width: 48px; text-align: center; }
-
-.budget__list { list-style: none; display: flex; flex-direction: column; gap: 1rem; }
-.budget__row { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 0.4rem 1rem; }
-.budget__label { font-size: 0.92rem; }
-.budget__track { grid-column: 1 / -1; order: 3; height: 10px; background: var(--bg); border-radius: 999px; overflow: hidden; }
-.budget__fill { display: block; height: 100%; border-radius: 999px; background: linear-gradient(90deg, var(--blue), var(--coral)); transition: width 0.3s; }
-.budget__amt { font-family: var(--latin); font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap; }
-.budget__total {
-  margin-top: 1.5rem; padding-top: 1.2rem; border-top: 1.5px solid var(--ink);
-  display: flex; justify-content: space-between; align-items: baseline;
-}
-.budget__total span { font-weight: 500; }
-.budget__total strong { font-family: var(--latin); font-weight: 800; font-size: 1.6rem; color: var(--blue); }
-.budget__note { margin-top: 0.7rem; font-size: 0.82rem; color: var(--ink-soft); }
-
 /* ───────── CHECKLIST ───────── */
 .check__top { display: flex; align-items: center; gap: 0.8rem; margin-bottom: 1.6rem; }
 .check__bar {
@@ -517,11 +510,12 @@ body {
 </style>
 </head>
 <body>
+<a href="#overview" class="skip-link">본문으로 건너뛰기</a>
 <div class="progress"><div class="progress__bar" id="prog" style="width:0%"></div></div>
 <nav class="nav" id="nav"><div class="nav__inner">
   <a href="#top" class="nav__brand">부산<span>TRIP</span></a>
   <button class="nav__burger" id="burger" aria-label="메뉴"><span></span><span></span><span></span></button>
-  <ul class="nav__links" id="navlinks"><li><a href="#overview" data-nav="overview">개요</a></li><li><a href="#itinerary" data-nav="itinerary">일정</a></li><li><a href="#budget" data-nav="budget">예산</a></li><li><a href="#checklist" data-nav="checklist">준비물</a></li><li><a href="#tips" data-nav="tips">팁</a></li></ul>
+  <ul class="nav__links" id="navlinks"><li><a href="#overview" data-nav="overview">개요</a></li><li><a href="#itinerary" data-nav="itinerary">일정</a></li><li><a href="#checklist" data-nav="checklist">준비물</a></li><li><a href="#tips" data-nav="tips">팁</a></li></ul>
 </div></nav>
 <button class="totop" id="totop" aria-label="맨 위로">↑</button>
 <main id="top">
@@ -531,7 +525,7 @@ body {
       <p class="hero__kicker"><span class="dot"></span> TRAVEL PLAN · BUSAN</p>
       <h1 class="hero__title"><span class="hero__place">부산</span><span class="hero__big">2박 3일</span></h1>
       <p class="hero__sub">바다 위를 걷고, 타고, 즐기는 액티비티 여행</p>
-      <p class="hero__dates">2025. 10. 17 — 10. 19 · 금~일</p>
+      <p class="hero__dates">2026. 06. 04 — 06. 06 · 목~토</p>
       <a href="#itinerary" class="hero__cta">일정 보기 <span>→</span></a>
     </div>
     <div class="hero__scroll"><span>SCROLL</span><span class="hero__line"></span></div>
@@ -543,7 +537,7 @@ body {
         <li class="fact reveal reveal--in"><span class="fact__label">기간</span><span class="fact__value">2박 3일</span></li>
         <li class="fact reveal reveal--in"><span class="fact__label">이동수단</span><span class="fact__value">버스·지하철·택시</span></li>
         <li class="fact reveal reveal--in"><span class="fact__label">추천 계절</span><span class="fact__value">가을</span></li>
-        <li class="fact reveal reveal--in"><span class="fact__label">예상 예산</span><span class="fact__value">1인 55만원</span></li>
+        <li class="fact reveal reveal--in"><span class="fact__label">테마</span><span class="fact__value">액티비티</span></li>
     </ul>
     <h2 class="overview__sub">대표 코스</h2>
     <div class="highlights">
@@ -595,9 +589,9 @@ body {
         </div>
         <ol class="timeline">
           
-          <li class="tl">
+          <li class="tl is-open">
             <div class="tl__rail"><span class="tl__dot"></span></div>
-            <button class="tl__head" aria-expanded="false">
+            <button class="tl__head" aria-expanded="true">
               <span class="tl__time">15:00</span>
               <span class="tl__heading"><span class="tl__title">부산역 도착 → 해운대 이동</span><span class="tl__place-mini">부산역</span></span>
               <span class="tl__chev">⌄</span>
@@ -683,9 +677,9 @@ body {
         </div>
         <ol class="timeline">
           
-          <li class="tl">
+          <li class="tl is-open">
             <div class="tl__rail"><span class="tl__dot"></span></div>
-            <button class="tl__head" aria-expanded="false">
+            <button class="tl__head" aria-expanded="true">
               <span class="tl__time">10:30</span>
               <span class="tl__heading"><span class="tl__title">광안리 이동 & 브런치</span><span class="tl__place-mini">광안리해수욕장</span></span>
               <span class="tl__chev">⌄</span>
@@ -758,9 +752,9 @@ body {
         </div>
         <ol class="timeline">
           
-          <li class="tl">
+          <li class="tl is-open">
             <div class="tl__rail"><span class="tl__dot"></span></div>
-            <button class="tl__head" aria-expanded="false">
+            <button class="tl__head" aria-expanded="true">
               <span class="tl__time">11:00</span>
               <span class="tl__heading"><span class="tl__title">체크아웃 & 부산역 짐 보관</span><span class="tl__place-mini">부산역</span></span>
               <span class="tl__chev">⌄</span>
@@ -841,22 +835,6 @@ body {
     </div>
   </div></section>
 
-  <section class="section budget" id="budget"><div class="wrap">
-    <div class="section__head reveal reveal--in"><span class="eyebrow">Budget</span><h2 class="section__title">예상 예산</h2><p class="section__hint">인원을 바꾸면 합계가 자동으로 계산돼요.</p></div>
-    <div class="budget__box reveal reveal--in">
-      <div class="people"><span class="people__label">인원</span><div class="people__ctrl"><button id="minus" aria-label="인원 줄이기">−</button><span class="people__num" id="people">1명</span><button id="plus" aria-label="인원 늘리기">+</button></div></div>
-      <ul class="budget__list">
-          <li class="budget__row"><span class="budget__label">교통 (KTX 왕복 + 시내)</span><span class="budget__track"><span class="budget__fill" style="width:75%"></span></span><span class="budget__amt">12만원</span></li>
-          <li class="budget__row"><span class="budget__label">숙박 (2박)</span><span class="budget__track"><span class="budget__fill" style="width:100%"></span></span><span class="budget__amt">16만원</span></li>
-          <li class="budget__row"><span class="budget__label">식비</span><span class="budget__track"><span class="budget__fill" style="width:63%"></span></span><span class="budget__amt">10만원</span></li>
-          <li class="budget__row"><span class="budget__label">액티비티 · 입장</span><span class="budget__track"><span class="budget__fill" style="width:81%"></span></span><span class="budget__amt">13만원</span></li>
-          <li class="budget__row"><span class="budget__label">기타 · 기념품</span><span class="budget__track"><span class="budget__fill" style="width:25%"></span></span><span class="budget__amt">4만원</span></li>
-      </ul>
-      <div class="budget__total"><span id="totlabel">1명 합계</span><strong id="total">약 55만원</strong></div>
-      <p class="budget__note">1인 약 55만원 기준 · 숙박은 인원·객실에 따라 달라질 수 있어요.</p>
-    </div>
-  </div></section>
-
   <section class="section" id="checklist"><div class="wrap">
     <div class="section__head reveal reveal--in"><span class="eyebrow">Checklist</span><h2 class="section__title">준비물</h2><p class="section__hint">체크 상태는 자동 저장돼요.</p></div>
     <div class="check">
@@ -909,8 +887,8 @@ body {
   burger.addEventListener('click', function(){ links.classList.toggle('nav__links--open'); });
   var navAs = links.querySelectorAll('a');
   Array.prototype.forEach.call(navAs, function(a){ a.addEventListener('click', function(){ links.classList.remove('nav__links--open'); }); });
-  var sio = new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ Array.prototype.forEach.call(navAs, function(a){ a.classList.toggle('is-active', a.getAttribute('data-nav') === e.target.id); }); } }); }, { rootMargin: '-45% 0px -50% 0px' });
-  ['overview','itinerary','budget','checklist','tips'].forEach(function(id){ var el = document.getElementById(id); if(el) sio.observe(el); });
+  var sio = new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ Array.prototype.forEach.call(navAs, function(a){ var on = a.getAttribute('data-nav') === e.target.id; a.classList.toggle('is-active', on); if(on){ a.setAttribute('aria-current','true'); } else { a.removeAttribute('aria-current'); } }); } }); }, { rootMargin: '-45% 0px -50% 0px' });
+  ['overview','itinerary','checklist','tips'].forEach(function(id){ var el = document.getElementById(id); if(el) sio.observe(el); });
 
   var tabs = document.querySelectorAll('.daytab');
   var dayEls = document.querySelectorAll('.day[data-day]');
@@ -929,12 +907,6 @@ body {
       head.setAttribute('aria-expanded', open ? 'true' : 'false');
     });
   });
-
-  var perPerson = 55, unit = '만원', people = 1;
-  var peopleEl = document.getElementById('people'), totalEl = document.getElementById('total'), totLabel = document.getElementById('totlabel');
-  function renderPeople(){ peopleEl.textContent = people + '명'; totLabel.textContent = people + '명 합계'; totalEl.textContent = '약 ' + (perPerson * people) + unit; }
-  document.getElementById('minus').addEventListener('click', function(){ people = Math.max(1, people - 1); renderPeople(); });
-  document.getElementById('plus').addEventListener('click', function(){ people = Math.min(10, people + 1); renderPeople(); });
 
   var KEY = 'busan-trip-checklist', total = 11;
   var fill = document.getElementById('checkfill'), label = document.getElementById('checklabel');

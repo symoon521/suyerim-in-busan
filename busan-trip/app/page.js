@@ -4,12 +4,12 @@ import Nav from "../components/Nav";
 import ScrollProgress from "../components/ScrollProgress";
 import BackToTop from "../components/BackToTop";
 import Itinerary from "../components/Itinerary";
-import Budget from "../components/Budget";
 import Checklist from "../components/Checklist";
 
 export default function Home() {
   return (
     <>
+      <a href="#overview" className="skip-link">본문으로 건너뛰기</a>
       <ScrollProgress />
       <Nav />
       <BackToTop />
@@ -81,20 +81,6 @@ export default function Home() {
               <p className="section__hint">탭으로 날짜를 바꾸고, 일정을 눌러 자세히 보세요.</p>
             </Reveal>
             <Itinerary />
-          </div>
-        </section>
-
-        {/* ───────── BUDGET ───────── */}
-        <section className="section budget" id="budget">
-          <div className="wrap">
-            <Reveal className="section__head">
-              <span className="eyebrow">Budget</span>
-              <h2 className="section__title">예상 예산</h2>
-              <p className="section__hint">인원을 바꾸면 합계가 자동으로 계산돼요.</p>
-            </Reveal>
-            <Reveal>
-              <Budget />
-            </Reveal>
           </div>
         </section>
 

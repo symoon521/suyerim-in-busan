@@ -7,7 +7,7 @@ export const trip = {
   placeEn: "BUSAN",
   title: "2박 3일",
   subtitle: "바다 위를 걷고, 타고, 즐기는 액티비티 여행",
-  dates: "2025. 10. 17 — 10. 19 · 금~일",
+  dates: "2026. 06. 04 — 06. 06 · 목~토",
   intro:
     "해변열차와 스카이캡슐, 패들보드, 불꽃 요트투어까지 — 부산의 바다를 온몸으로 즐기는 액티비티 중심 2박 3일.",
 };
@@ -16,7 +16,7 @@ export const facts = [
   { label: "기간", value: "2박 3일" },
   { label: "이동수단", value: "버스·지하철·택시" },
   { label: "추천 계절", value: "가을" },
-  { label: "예상 예산", value: "1인 55만원" },
+  { label: "테마", value: "액티비티" },
 ];
 
 export const highlights = [
@@ -73,18 +73,6 @@ export const days = [
   },
 ];
 
-// 예산 (1인 기준, 단위: 만원)
-export const budget = {
-  unit: "만원",
-  items: [
-    { label: "교통 (KTX 왕복 + 시내)", amount: 12 },
-    { label: "숙박 (2박)", amount: 16 },
-    { label: "식비", amount: 10 },
-    { label: "액티비티 · 입장", amount: 13 },
-    { label: "기타 · 기념품", amount: 4 },
-  ],
-};
-
 // 준비물 체크리스트
 export const checklist = [
   { group: "필수", items: ["신분증 / 모바일 티켓", "교통카드(또는 모바일)", "보조배터리", "현금 약간"] },
@@ -104,7 +92,6 @@ export const tips = [
 export const nav = [
   { id: "overview", label: "개요" },
   { id: "itinerary", label: "일정" },
-  { id: "budget", label: "예산" },
   { id: "checklist", label: "준비물" },
   { id: "tips", label: "팁" },
 ];
